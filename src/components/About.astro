@@ -1,0 +1,107 @@
+---
+import { t, type Lang } from '../i18n/index.ts';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <!-- Text -->
+      <div class="about-text">
+        <div class="section-header fade-up">
+          <span class="section-label">{t('about.section_label', lang)}</span>
+          <h2>{t('about.title', lang)}</h2>
+        </div>
+        <div class="about-paragraphs">
+          <p class="fade-up" data-delay="50">{t('about.p1', lang)}</p>
+          <p class="fade-up" data-delay="100">{t('about.p2', lang)}</p>
+          <p class="fade-up" data-delay="150">{t('about.p3', lang)}</p>
+        </div>
+      </div>
+
+      <!-- Identity card -->
+      <div class="about-card-wrap fade-up" data-delay="100">
+        <div class="identity-card">
+          <div class="identity-header mono">identity.toml</div>
+          <div class="identity-body mono">
+            <div class="id-row"><span class="id-key">name</span><span class="id-eq">=</span><span class="id-val">"Federico Lopez Costanzo"</span></div>
+            <div class="id-row"><span class="id-key">role</span><span class="id-eq">=</span><span class="id-val">"Product Engineer"</span></div>
+            <div class="id-row"><span class="id-key">location</span><span class="id-eq">=</span><span class="id-val">"Córdoba, AR"</span></div>
+            <div class="id-row"><span class="id-key">timezone</span><span class="id-eq">=</span><span class="id-val">"GMT-3"</span></div>
+            <div class="id-row"><span class="id-key">status</span><span class="id-eq">=</span><span class="id-val id-green">"available"</span></div>
+            <div class="id-row"><span class="id-key">edu</span><span class="id-eq">=</span><span class="id-val">"Software Eng (in progress)"</span></div>
+            <div class="id-row"><span class="id-key">speaks</span><span class="id-eq">=</span><span class="id-val">["es-AR", "en"]</span></div>
+            <div class="id-row"><span class="id-key">focus</span><span class="id-eq">=</span><span class="id-val">"shipping products"</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.about-grid {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-top: 2rem;
+}
+
+.identity-card {
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+}
+
+.identity-header {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: 0.625rem 1rem;
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.identity-body {
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.id-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.id-key {
+  color: var(--color-text-tertiary);
+  min-width: 6rem;
+  flex-shrink: 0;
+}
+
+.id-eq {
+  color: var(--color-text-secondary);
+  padding: 0 0.5rem;
+}
+
+.id-val { color: var(--color-text-secondary); }
+.id-green { color: var(--color-accent-primary); }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+</style>

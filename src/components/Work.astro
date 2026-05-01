@@ -1,0 +1,56 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/projects.ts';
+import { t, type Lang } from '../i18n/index.ts';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+
+<section id="work" class="section">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-label">{t('work.section_label', lang)}</span>
+      <h2>{t('work.title', lang)}</h2>
+    </div>
+
+    <div class="projects-list">
+      {projects.map((project, i) => (
+        <div class="fade-up" data-delay={String(i * 80)}>
+          <ProjectCard project={project} lang={lang} />
+        </div>
+      ))}
+    </div>
+
+    <div class="more-github fade-up" data-delay="160">
+      <a
+        href="https://github.com/Fede1808"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="more-link mono link-underline"
+        aria-label="Ver más proyectos en GitHub"
+      >
+        {t('work.more_github', lang)}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.more-github { text-align: center; }
+
+.more-link {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+  transition: color 200ms ease;
+}
+.more-link:hover { color: var(--color-text-primary); }
+</style>

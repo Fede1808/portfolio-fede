@@ -1,0 +1,153 @@
+---
+// Terminal — GSAP typewriter animation. Runs client-side only.
+---
+
+<div class="terminal-window" aria-label="Terminal decorativa" aria-hidden="true">
+  <div class="terminal-chrome">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <span class="terminal-label mono">~/fede — zsh</span>
+  </div>
+  <div class="terminal-body">
+    <div id="terminal-output"></div>
+    <div class="terminal-final-line" id="terminal-final" style="display:none;">
+      <span class="prompt mono">~/fede&nbsp;$&nbsp;</span><span class="cursor-blink" style="color:var(--color-accent-primary)">█</span>
+    </div>
+  </div>
+</div>
+
+<script>
+import { gsap } from 'gsap';
+
+interface TLine { type: 'cmd' | 'out' | 'blank'; text: string }
+
+const LINES: TLine[] = [
+  { type: 'cmd',   text: '~/fede $ whoami' },
+  { type: 'out',   text: '> Product Engineer' },
+  { type: 'out',   text: '> Building full-stack & mobile apps' },
+  { type: 'blank', text: '' },
+  { type: 'cmd',   text: '~/fede $ cat stack.json' },
+  { type: 'out',   text: '{' },
+  { type: 'out',   text: '  "languages":  ["TypeScript", "Python", "SQL"],' },
+  { type: 'out',   text: '  "mobile":     ["React Native", "Expo"],' },
+  { type: 'out',   text: '  "web":        ["Astro", "Next.js", "Tailwind"],' },
+  { type: 'out',   text: '  "backend":    ["Supabase", "Edge Functions"],' },
+  { type: 'out',   text: '  "ai-tooling": ["Claude Code", "LLM APIs"]' },
+  { type: 'out',   text: '}' },
+  { type: 'blank', text: '' },
+  { type: 'cmd',   text: '~/fede $ ls projects/' },
+  { type: 'out',   text: 'azul-app/  prode-en-familia/' },
+  { type: 'blank', text: '' },
+];
+
+const container = document.getElementById('terminal-output')!;
+const finalLine  = document.getElementById('terminal-final')!;
+const reduced    = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function makeEl(line: TLine): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'tline';
+  if (line.type === 'cmd')   { el.style.color = 'var(--color-accent-primary)'; }
+  if (line.type === 'out')   { el.style.color = 'var(--color-text-secondary)'; }
+  if (line.type === 'blank') { el.style.minHeight = '0.75em'; }
+  return el;
+}
+
+function typeText(el: HTMLElement, text: string, speed: number): Promise<void> {
+  return new Promise(resolve => {
+    let i = 0;
+    const id = setInterval(() => {
+      el.textContent = text.slice(0, ++i);
+      if (i >= text.length) { clearInterval(id); resolve(); }
+    }, speed);
+  });
+}
+
+async function run() {
+  for (const line of LINES) {
+    const el = makeEl(line);
+    container.appendChild(el);
+    if (line.type === 'blank') { await new Promise(r => setTimeout(r, 80)); continue; }
+    gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.12 });
+    await typeText(el, line.text, line.type === 'cmd' ? 40 : 12);
+    await new Promise(r => setTimeout(r, line.type === 'cmd' ? 180 : 40));
+  }
+  finalLine.style.display = 'flex';
+  gsap.fromTo(finalLine, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+}
+
+function runInstant() {
+  LINES.forEach(line => {
+    const el = makeEl(line);
+    if (line.type !== 'blank') el.textContent = line.text;
+    container.appendChild(el);
+  });
+  finalLine.style.display = 'flex';
+}
+
+if (reduced) {
+  runInstant();
+} else {
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { obs.disconnect(); run(); }
+  }, { threshold: 0.3 });
+  const win = document.querySelector('.terminal-window');
+  if (win) obs.observe(win);
+}
+</script>
+
+<style>
+.terminal-window {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+
+.terminal-chrome {
+  background: var(--color-bg-elevated);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-label {
+  margin-left: 0.5rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.75rem;
+}
+
+.terminal-body {
+  padding: 1.25rem 1.5rem;
+  min-height: 300px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+
+.tline {
+  display: block;
+  white-space: pre;
+  min-height: 1.3em;
+}
+
+.terminal-final-line {
+  align-items: center;
+  gap: 0;
+  margin-top: 0.125em;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.prompt { color: var(--color-accent-primary); }
+</style>

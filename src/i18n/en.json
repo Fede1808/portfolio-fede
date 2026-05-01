@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "work": "Work",
+    "experience": "Experience",
+    "contact": "Contact",
+    "download_cv": "Download CV"
+  },
+  "hero": {
+    "available": "Available for work",
+    "pitch": "I ship products, not prototypes. Full-stack and mobile applications that reach production.",
+    "cta_primary": "View work",
+    "cta_ghost": "Get in touch"
+  },
+  "about": {
+    "section_label": "// about",
+    "title": "About me",
+    "p1": "I'm Federico, a software engineer based in Córdoba, Argentina. I specialize in building complete products: from the initial client conversation to production deployment.",
+    "p2": "I come from a classical background in Systems Engineering (UTN) and Software Engineering (Siglo 21), but my way of working is modern: I combine engineering judgment with AI tools to deliver faster without sacrificing quality.",
+    "p3": "Before going full-time into this, I taught computer science in high school. That experience gave me something undervalued in this industry: the ability to communicate technical ideas clearly, understand what others need, and transform vague requirements into concrete software."
+  },
+  "skills": {
+    "section_label": "// skills",
+    "title": "Stack & tools",
+    "tagline": "I learn what the project requires. Stack is a tool, not an identity.",
+    "mobile": "Mobile",
+    "frontend": "Frontend / Web",
+    "backend": "Backend & Data",
+    "ai": "AI & Tooling",
+    "soft": "Soft Skills"
+  },
+  "work": {
+    "section_label": "// selected work",
+    "title": "Selected work",
+    "more_github": "More experiments on GitHub →",
+    "view_appstore": "App Store",
+    "view_googleplay": "Google Play",
+    "view_demo": "Demo",
+    "view_github": "GitHub",
+    "how_built_label": "How I built it",
+    "screenshot_placeholder": "Screenshot coming soon",
+    "link_placeholder": "Coming soon"
+  },
+  "experience": {
+    "section_label": "// experience",
+    "title": "Experience"
+  },
+  "education": {
+    "section_label": "// education",
+    "title": "Education",
+    "university_label": "University",
+    "courses_label": "Courses & certifications"
+  },
+  "contact": {
+    "section_label": "// contact",
+    "title": "Let's work together",
+    "subtitle": "Available for freelance, full-time and technical consulting. If you have a product to build, let's talk."
+  },
+  "footer": {
+    "built": "> built by federico · 2026 · made with astro & claude code"
+  }
+}

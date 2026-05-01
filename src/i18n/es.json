@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "about": "Sobre mí",
+    "skills": "Skills",
+    "work": "Proyectos",
+    "experience": "Experiencia",
+    "contact": "Contacto",
+    "download_cv": "Descargar CV"
+  },
+  "hero": {
+    "available": "Disponible para trabajo",
+    "pitch": "Construyo productos terminados, no prototipos. Especializado en aplicaciones full-stack y móviles que llegan a producción.",
+    "cta_primary": "Ver proyectos",
+    "cta_ghost": "Contactarme"
+  },
+  "about": {
+    "section_label": "// about",
+    "title": "Sobre mí",
+    "p1": "Soy Federico, ingeniero de software basado en Córdoba, Argentina. Me especializo en construir productos completos: desde la conversación inicial con el cliente hasta la publicación en producción.",
+    "p2": "Vengo de una formación clásica en Ingeniería en Sistemas (UTN) e Ingeniería en Software (Siglo 21), pero mi forma de trabajar es moderna: combino criterio de ingeniería con herramientas de IA para entregar más rápido sin sacrificar calidad.",
+    "p3": "Antes de dedicarme a esto a tiempo completo enseñé informática en secundaria. Esa experiencia me dio algo que se subestima en este rubro: la capacidad de comunicar ideas técnicas de forma clara, entender lo que el otro necesita, y transformar requisitos vagos en software concreto."
+  },
+  "skills": {
+    "section_label": "// skills",
+    "title": "Stack & herramientas",
+    "tagline": "Aprendo lo que el proyecto necesite. El stack es una herramienta, no una identidad.",
+    "mobile": "Mobile",
+    "frontend": "Frontend / Web",
+    "backend": "Backend & Data",
+    "ai": "AI & Tooling",
+    "soft": "Soft Skills"
+  },
+  "work": {
+    "section_label": "// selected work",
+    "title": "Proyectos seleccionados",
+    "more_github": "Más experimentos en GitHub →",
+    "view_appstore": "App Store",
+    "view_googleplay": "Google Play",
+    "view_demo": "Demo",
+    "view_github": "GitHub",
+    "how_built_label": "Cómo lo construí",
+    "screenshot_placeholder": "Screenshot próximamente",
+    "link_placeholder": "Próximamente"
+  },
+  "experience": {
+    "section_label": "// experience",
+    "title": "Experiencia"
+  },
+  "education": {
+    "section_label": "// education",
+    "title": "Formación",
+    "university_label": "Universitaria",
+    "courses_label": "Cursos & certificaciones"
+  },
+  "contact": {
+    "section_label": "// contact",
+    "title": "Trabajemos juntos",
+    "subtitle": "Disponible para trabajo freelance, proyectos full-time y consultorías técnicas. Si tenés un producto que construir, hablemos."
+  },
+  "footer": {
+    "built": "> built by federico · 2026 · made with astro & claude code"
+  }
+}
