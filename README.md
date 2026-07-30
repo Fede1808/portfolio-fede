@@ -1,51 +1,57 @@
 # portfolio-fede
 
-Portfolio personal de Federico Lopez Costanzo — Astro 5 + Tailwind CSS v4 + GSAP.
+Portfolio personal de Federico López Costanzo.
+Sitio estático, sin build y sin dependencias: se publica tal como está en el repo.
+
+En producción: https://portfolio-fede-alpha.vercel.app
+
+## Cómo está armado
+
+El diseño se hizo en Claude Design y se bajó como bundle. Acá vive ya desempaquetado:
+
+```
+public/
+  index.html     todo el sitio: markup, CSS y la lógica en un solo archivo
+  assets/        React (2 chunks), el runtime del diseño y las Geist en woff2
+  cv.pdf         el CV que se descarga desde Contacto
+  og.png         preview 1200×630 para LinkedIn / WhatsApp
+  favicon.svg
+```
+
+Tiene **dos formatos** que se alternan con las teclas `1` y `2`:
+
+- **Interfaz** — cinco vistas (Perfil, Experiencia, Proyectos, Formación, Contacto).
+  Se navegan con `↑` `↓` o con `j` / `k`.
+- **Consola** — una terminal que responde comandos: `help`, `whoami`, `exp`,
+  `proyectos`, `azul`, `datafut`, `pregon`, `prode`, `stack`, `formacion`,
+  `contacto`, `clear`. Tiene historial con flechas y autocompletado con `Tab`.
 
 ## Desarrollo local
 
-```bash
-npm install
-npm run dev
-```
-
-El dev server corre en `http://localhost:4321`.
-
-## Build y deploy
+No hay `npm install` ni build. Alcanza con servir `public/`:
 
 ```bash
-npm run build    # genera dist/
-npm run preview  # previsualización local del build
+npx serve public
 ```
 
-Deploy en Vercel: conectar el repo o usar `vercel` CLI desde la raíz.
+Abrir con doble clic también funciona, pero por `file://` el navegador bloquea
+algunos `fetch` y aparecen errores en consola que no son reales.
 
-## TODO: REVIEW — items pendientes antes de publicar
+## Cómo editar
 
-- [ ] `public/cv-federico-lopez-costanzo.pdf` — subir PDF del CV
-- [ ] `public/og.png` — imagen OpenGraph 1200×630 (fondo dark, nombre + título)
-- [ ] `public/projects/azul/` — agregar screenshots de la app (PNG/WebP)
-- [ ] `src/data/projects.ts` — completar `links.appStore` y `links.googlePlay` con URLs reales
-- [ ] `src/data/projects.ts` — completar `links.demo` y `links.github` de Prode en Familia
-- [ ] `astro.config.mjs` — confirmar URL del sitio (`site:` field)
-- [ ] `src/layouts/BaseLayout.astro` — actualizar URL en schema.org JSON-LD
+Todo el contenido vive en `public/index.html`, en el `<script type="text/x-dc">`
+del final: los arrays `exp`, `projects`, `edu` y `skills`. El markup y el CSS
+están arriba, en el mismo archivo, con estilos inline.
 
-## Cómo editar proyectos
+Los ajustes propios (responsive, metadatos, foto, botón de CV) están marcados
+con comentarios. El bloque `<style id="responsive-fede">` es agregado nuestro:
+el diseño original venía maquetado sólo para desktop.
 
-Editar `src/data/projects.ts`. Cada objeto `Project` tiene:
-- `description.es` / `description.en` — texto en ambos idiomas
-- `highlights` — lista de puntos clave
-- `stack` — tecnologías usadas
-- `links` — URLs de App Store, Google Play, demo, GitHub
-- `screenshots` — rutas de imágenes en `/public/projects/{id}/`
+> **Ojo:** si el diseño se regenera desde Claude Design, sobreescribe este
+> archivo y se pierden esos ajustes. Conviene rehacerlos sobre el bundle nuevo.
 
-## Cómo editar traducciones
+## Pendientes
 
-Editar `src/i18n/es.json` y `src/i18n/en.json`. Las claves deben coincidir en ambos archivos.
-
-## Stack
-
-- [Astro 5](https://astro.build)
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [GSAP](https://gsap.com)
-- [Fontsource Geist](https://fontsource.org/fonts/geist)
+- [ ] Link de Google Play de App Azul (hoy dice "falta link de Google Play")
+- [ ] Demo desplegada de datafut (hoy dice "demo pendiente de deploy")
+- [ ] Guardar la fuente del CV (`cv.html` + `gen-cv.mjs`) para poder regenerarlo
