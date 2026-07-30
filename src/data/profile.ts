@@ -30,7 +30,7 @@ export const profile: Profile = {
   email: 'fede.fl73@gmail.com',
   github: 'https://github.com/Fede1808',
   linkedin: 'https://www.linkedin.com/in/federicolopezcostanzo/',
-  cv: null,   // TODO: subir el CV a /public/cv.pdf y poner '/cv.pdf'
+  cv: '/cv.pdf',
   foto: null, // TODO: agregar foto en /public/fede.jpg y poner '/fede.jpg'
 };
 

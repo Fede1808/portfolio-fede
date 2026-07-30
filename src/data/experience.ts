@@ -5,10 +5,9 @@ export interface Experiencia {
   descripcion: string;
 }
 
-// TODO: confirmar las fechas exactas de cada puesto.
 export const experiencia: Experiencia[] = [
   {
-    periodo: '2026 — actual',
+    periodo: 'Mar 2026 — actual',
     puesto: 'Pregón',
     lugar: 'proyecto propio',
     descripcion:
@@ -16,7 +15,7 @@ export const experiencia: Experiencia[] = [
       'con dueños de negocio para entender qué necesitan y traducirlo a algo construible.',
   },
   {
-    periodo: '2025 — 2026',
+    periodo: 'Ene — Mar 2026',
     puesto: 'Desarrollador',
     lugar: 'Azul, distribuidora de alimentos',
     descripcion:
@@ -24,7 +23,7 @@ export const experiencia: Experiencia[] = [
       'ellos, la desarrollé completa y la publiqué en Google Play. Sigue en uso.',
   },
   {
-    periodo: '2025',
+    periodo: 'Mar — Jun 2025',
     puesto: 'Pasantía',
     lugar: 'SET Logística',
     descripcion:
@@ -32,9 +31,9 @@ export const experiencia: Experiencia[] = [
       'del marco de la práctica profesional de la carrera.',
   },
   {
-    periodo: 'Actual',
+    periodo: '2023 — actual',
     puesto: 'Docente de Informática',
-    lugar: 'colegio secundario',
+    lugar: 'Instituto José Peña',
     descripcion:
       'Doy clases de informática. Explicar todos los días me acostumbró a documentar, a ' +
       'preguntar temprano lo que no está claro y a no dar nada por sobreentendido.',
