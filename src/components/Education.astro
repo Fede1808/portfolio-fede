@@ -1,118 +1,79 @@
 ---
-import { t, type Lang } from '../i18n/index.ts';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+import { educacion, skills } from '../data/profile.ts';
 ---
 
-<section id="education" class="section" style="background: var(--color-bg-secondary);">
-  <div class="section-inner">
-    <div class="section-header fade-up">
-      <span class="section-label">{t('education.section_label', lang)}</span>
-      <h2>{t('education.title', lang)}</h2>
-    </div>
-
-    <div class="edu-grid">
-      <!-- University -->
-      <div class="fade-up" data-delay="50">
-        <h3 class="edu-subtitle mono eyebrow" style="margin-bottom:1.5rem;">{t('education.university_label', lang)}</h3>
-        <div class="edu-list">
+<section class="section" id="formacion">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <div class="sec-hd"><span>Formación</span><span class="ln"></span></div>
+        {educacion.map(e => (
           <div class="edu-item">
-            <span class="edu-period mono">2024 — actualidad</span>
-            <div>
-              <p class="edu-degree">Ingeniería en Software</p>
-              <p class="edu-school">Universidad Siglo 21</p>
-            </div>
+            <h3>{e.titulo}</h3>
+            <p>{e.institucion}</p>
+            <span class="yr">{e.detalle}</span>
           </div>
-          <div class="edu-item">
-            <span class="edu-period mono">2020 — 2024</span>
-            <div>
-              <p class="edu-degree">Ingeniería en Sistemas</p>
-              <p class="edu-school">UTN Córdoba</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
-      <!-- Courses -->
-      <div class="fade-up" data-delay="100">
-        <h3 class="edu-subtitle mono eyebrow" style="margin-bottom:1.5rem;">{t('education.courses_label', lang)}</h3>
-        <div class="edu-list">
-          <div class="edu-item">
-            <span class="edu-period mono">2025</span>
-            <div>
-              <p class="edu-degree">Científico de Datos asociado en Python</p>
-              <p class="edu-school">DataCamp</p>
+      <div>
+        <div class="sec-hd"><span>Tecnologías</span><span class="ln"></span></div>
+        <dl class="skl">
+          {skills.map(s => (
+            <div class="skl-row">
+              <dt>{s.area}</dt>
+              <dd>{s.items}</dd>
             </div>
-          </div>
-          <div class="edu-item">
-            <span class="edu-period mono">2024</span>
-            <div>
-              <p class="edu-degree">Modern Data Analyst</p>
-              <p class="edu-school">Udemy</p>
-            </div>
-          </div>
-          <div class="edu-item">
-            <span class="edu-period mono">2023</span>
-            <div>
-              <p class="edu-degree">Redes Neuronales con Python</p>
-              <p class="edu-school">FaMAF — UNC</p>
-            </div>
-          </div>
-          <div class="edu-item">
-            <span class="edu-period mono">2022</span>
-            <div>
-              <p class="edu-degree">Curso Avanzado de JavaScript</p>
-              <p class="edu-school">Coderhouse</p>
-            </div>
-          </div>
-        </div>
+          ))}
+        </dl>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-.edu-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-}
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  @media (max-width: 760px) {
+    .two { grid-template-columns: 1fr; gap: 24px; }
+  }
 
-.edu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+  .edu-item { padding: 12px 0; border-top: 1px solid var(--line-soft); }
+  .edu-item:first-of-type { border-top: none; padding-top: 0; }
+  .edu-item h3 {
+    font-size: 14.5px;
+    font-weight: 600;
+    margin: 0 0 2px;
+    letter-spacing: -.012em;
+  }
+  .edu-item p { font-size: 13px; color: var(--ink-2); margin: 0; }
+  .yr {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: .05em;
+  }
 
-.edu-item {
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.edu-period {
-  font-size: 0.75rem;
-  color: var(--color-text-tertiary);
-  letter-spacing: 0.02em;
-  min-width: 90px;
-  padding-top: 0.15rem;
-  flex-shrink: 0;
-}
-
-.edu-degree {
-  font-size: 0.9375rem;
-  color: var(--color-text-primary);
-  font-weight: 500;
-  margin: 0 0 0.2rem;
-}
-
-.edu-school {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-@media (max-width: 700px) {
-  .edu-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-}
+  .skl { margin: 0; display: flex; flex-direction: column; gap: 11px; }
+  .skl-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    align-items: baseline;
+  }
+  @media (max-width: 480px) {
+    .skl-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+  .skl-row dt {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .skl-row dd {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
 </style>

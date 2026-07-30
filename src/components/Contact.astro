@@ -1,94 +1,27 @@
 ---
-import { t, type Lang } from '../i18n/index.ts';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
-
-const contacts = [
-  { label: 'Email', value: 'fede.fl73@gmail.com',            href: 'mailto:fede.fl73@gmail.com',               icon: '✉' },
-  { label: 'LinkedIn', value: 'federicolopezcostanzo',       href: 'https://www.linkedin.com/in/federicolopezcostanzo/', icon: 'in' },
-  { label: 'GitHub', value: 'Fede1808',                      href: 'https://github.com/Fede1808',               icon: 'gh' },
-  { label: 'WhatsApp', value: '+54 351 206 4296',             href: 'https://wa.me/5493512064296',               icon: '↗' }
-];
+import { profile } from '../data/profile.ts';
 ---
 
-<section id="contact" class="section">
-  <div class="section-inner">
-    <div class="contact-wrap">
-      <div class="section-header fade-up">
-        <span class="section-label">{t('contact.section_label', lang)}</span>
-        <h2>{t('contact.title', lang)}</h2>
-      </div>
-      <p class="contact-subtitle fade-up" data-delay="50">{t('contact.subtitle', lang)}</p>
-
-      <div class="contact-cards">
-        {contacts.map((c, i) => (
-          <a
-            href={c.href}
-            class="contact-card card fade-up"
-            data-delay={String(80 + i * 60)}
-            target={c.href.startsWith('mailto') ? '_self' : '_blank'}
-            rel="noopener noreferrer"
-            aria-label={`Contactar via ${c.label}: ${c.value}`}
-          >
-            <span class="contact-icon mono" aria-hidden="true">{c.icon}</span>
-            <div>
-              <p class="contact-label mono eyebrow" style="margin-bottom:0.25rem;">{c.label}</p>
-              <p class="contact-value">{c.value}</p>
-            </div>
-          </a>
-        ))}
-      </div>
+<section class="section cta" id="contacto">
+  <div class="wrap">
+    <div class="sec-hd"><span>Contacto</span><span class="ln"></span></div>
+    <h2>Disponible para sumarme a un equipo</h2>
+    <div class="cbtns">
+      <a class="btn btn-primary" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a class="btn" href={profile.github} rel="noopener">GitHub</a>
+      <a class="btn" href={profile.linkedin} rel="noopener">LinkedIn</a>
+      {profile.cv && <a class="btn" href={profile.cv} download>Descargar CV</a>}
     </div>
   </div>
 </section>
 
 <style>
-.contact-wrap { max-width: 700px; margin: 0 auto; text-align: center; }
-
-.contact-subtitle {
-  color: var(--color-text-secondary);
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  margin: 1rem 0 2.5rem;
-}
-
-.contact-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  text-align: left;
-}
-
-.contact-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.25rem;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 200ms ease, transform 200ms ease;
-}
-
-.contact-card:hover {
-  border-color: var(--color-accent-primary);
-  transform: translateY(-2px);
-}
-
-.contact-icon {
-  font-size: 1.125rem;
-  color: var(--color-text-tertiary);
-  width: 2rem;
-  text-align: center;
-  flex-shrink: 0;
-  transition: color 200ms ease;
-}
-
-.contact-card:hover .contact-icon { color: var(--color-accent-primary); }
-
-.contact-label { font-size: 0.6875rem; color: var(--color-text-tertiary); }
-.contact-value { font-size: 0.9rem; color: var(--color-text-primary); margin: 0; }
-
-@media (max-width: 500px) {
-  .contact-cards { grid-template-columns: 1fr; }
-}
+  h2 {
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    font-weight: 600;
+    letter-spacing: -.03em;
+    margin: 0 0 16px;
+    max-width: 24ch;
+  }
+  .cbtns { display: flex; flex-wrap: wrap; gap: 7px; }
 </style>

@@ -1,126 +1,72 @@
 ---
 import '../styles/global.css';
-import type { Lang } from '../i18n/index.ts';
+import { profile } from '../data/profile.ts';
 
 interface Props {
-  lang?: Lang;
   title?: string;
   description?: string;
 }
 
 const {
-  lang = 'es',
-  title = 'Federico Lopez Costanzo · Product Engineer',
-  description = lang === 'en'
-    ? 'Product Engineer based in Córdoba, Argentina. Specialized in full-stack and mobile applications. Available for freelance and remote work.'
-    : 'Product Engineer basado en Córdoba, Argentina. Especializado en aplicaciones full-stack y móviles. Disponible para freelance y trabajo remoto.'
+  title = `${profile.nombre} · ${profile.rol}`,
+  description =
+    'Desarrollador Full-Stack y Mobile en Córdoba, Argentina. Último año de Ingeniería en ' +
+    'Software. App móvil en producción para una distribuidora. Disponible full-time.',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://federicolopezcostanzo.com');
-const ogImage = new URL('/og.png', Astro.site ?? 'https://federicolopezcostanzo.com');
-const siteBase = Astro.site ?? 'https://federicolopezcostanzo.com';
+const site = Astro.site ?? 'https://federicolopezcostanzo.com';
+const canonicalURL = new URL(Astro.url.pathname, site);
+const ogImage = new URL('/og.png', site);
 ---
 <!doctype html>
-<html lang={lang}>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Font preload -->
     <link rel="preload" href="/fonts/geist-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/geist-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/geist-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
-    <!-- hreflang -->
-    <link rel="alternate" hreflang="es" href={new URL('/', siteBase)} />
-    <link rel="alternate" hreflang="en" href={new URL('/en/', siteBase)} />
-    <link rel="alternate" hreflang="x-default" href={new URL('/', siteBase)} />
-
-    <!-- Primary meta -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- OpenGraph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_AR'} />
+    <meta property="og:locale" content="es_AR" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Schema.org Person -->
-    <script is:inline type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Federico Lopez Costanzo",
-      "email": "fede.fl73@gmail.com",
-      "url": "https://federicolopezcostanzo.com",
-      "jobTitle": "Product Engineer",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Córdoba",
-        "addressCountry": "AR"
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Federico López Costanzo',
+      email: 'fede.fl73@gmail.com',
+      url: 'https://federicolopezcostanzo.com',
+      jobTitle: 'Desarrollador Full-Stack & Mobile',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Córdoba',
+        addressCountry: 'AR',
       },
-      "sameAs": [
-        "https://www.linkedin.com/in/federicolopezcostanzo/",
-        "https://github.com/Fede1808"
-      ]
-    }
-    </script>
+      alumniOf: {
+        '@type': 'CollegeOrUniversity',
+        name: 'Universidad Siglo 21',
+      },
+      knowsAbout: ['TypeScript', 'React Native', 'Next.js', 'Supabase', 'PostgreSQL', 'Python'],
+      sameAs: ['https://www.linkedin.com/in/federicolopezcostanzo/', 'https://github.com/Fede1808'],
+    })} />
   </head>
   <body>
-    <div id="mouse-glow" aria-hidden="true"></div>
     <slot />
-
-    <!-- Mouse glow -->
-    <script>
-      (function () {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        let tX = -300, tY = -300, cX = -300, cY = -300;
-        window.addEventListener('mousemove', (e) => { tX = e.clientX; tY = e.clientY; });
-        (function loop() {
-          const dx = tX - cX, dy = tY - cY;
-          if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-            cX += dx * 0.08;
-            cY += dy * 0.08;
-            document.documentElement.style.setProperty('--mx', `${cX}px`);
-            document.documentElement.style.setProperty('--my', `${cY}px`);
-          }
-          requestAnimationFrame(loop);
-        }());
-      }());
-    </script>
-
-    <!-- Scroll reveal -->
-    <script>
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const fadeEls = document.querySelectorAll<HTMLElement>('.fade-up');
-
-      if (prefersReducedMotion) {
-        fadeEls.forEach(el => el.classList.add('visible'));
-      } else {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const delay = Number((entry.target as HTMLElement).dataset.delay ?? 0);
-              setTimeout(() => entry.target.classList.add('visible'), delay);
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        fadeEls.forEach(el => observer.observe(el));
-      }
-    </script>
   </body>
 </html>

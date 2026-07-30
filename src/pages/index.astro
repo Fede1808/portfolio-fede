@@ -2,28 +2,21 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Skills from '../components/Skills.astro';
-import Work from '../components/Work.astro';
 import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
 import Education from '../components/Education.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import type { Lang } from '../i18n/index.ts';
-
-const lang: Lang = 'es';
 ---
 
-<BaseLayout lang={lang}>
-  <Header lang={lang} />
+<BaseLayout>
+  <Header />
   <main>
-    <Hero lang={lang} />
-    <About lang={lang} />
-    <Skills lang={lang} />
-    <Work lang={lang} />
-    <Experience lang={lang} />
-    <Education lang={lang} />
-    <Contact lang={lang} />
+    <Hero />
+    <Experience />
+    <Projects />
+    <Education />
+    <Contact />
   </main>
-  <Footer lang={lang} />
+  <Footer />
 </BaseLayout>

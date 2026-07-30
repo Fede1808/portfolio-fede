@@ -1,209 +1,59 @@
 ---
-import LanguageToggle from './LanguageToggle.astro';
-import { t, type Lang } from '../i18n/index.ts';
-interface Props { lang: Lang }
-const { lang } = Astro.props;
-const homeHref = lang === 'en' ? '/en/' : '/';
+import { profile } from '../data/profile.ts';
+
+const links = [
+  { href: '#experiencia', label: 'Experiencia' },
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#formacion', label: 'Formación' },
+  { href: '#contacto', label: 'Contacto' },
+];
 ---
 
-<header class="site-header" id="site-header">
-  <nav class="header-nav" aria-label="Navegación principal">
-    <!-- Logo -->
-    <a href={homeHref} class="header-logo mono" aria-label="Federico Lopez Costanzo — inicio">
-      &lt;FLC/&gt;
-    </a>
-
-    <!-- Desktop nav -->
-    <ul class="header-links" role="list">
-      <li><a href="#about"      class="header-link link-underline">{t('nav.about', lang)}</a></li>
-      <li><a href="#skills"     class="header-link link-underline">{t('nav.skills', lang)}</a></li>
-      <li><a href="#work"       class="header-link link-underline">{t('nav.work', lang)}</a></li>
-      <li><a href="#experience" class="header-link link-underline">{t('nav.experience', lang)}</a></li>
-      <li><a href="#contact"    class="header-link link-underline">{t('nav.contact', lang)}</a></li>
-    </ul>
-
-    <!-- Actions -->
-    <div class="header-actions">
-      <LanguageToggle currentLang={lang} />
-      <a
-        href="/cv-federico-lopez-costanzo.pdf"
-        class="btn btn-ghost btn-sm"
-        aria-label="Descargar CV"
-      >
-        {/* TODO: REVIEW — replace href when PDF is ready */}
-        {t('nav.download_cv', lang)}
-      </a>
-    </div>
-
-    <!-- Mobile hamburger -->
-    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <ul class="mobile-links" role="list">
-      <li><a href="#about"      class="mobile-link">{t('nav.about', lang)}</a></li>
-      <li><a href="#skills"     class="mobile-link">{t('nav.skills', lang)}</a></li>
-      <li><a href="#work"       class="mobile-link">{t('nav.work', lang)}</a></li>
-      <li><a href="#experience" class="mobile-link">{t('nav.experience', lang)}</a></li>
-      <li><a href="#contact"    class="mobile-link">{t('nav.contact', lang)}</a></li>
-    </ul>
-    <div class="mobile-bottom">
-      <LanguageToggle currentLang={lang} />
-    </div>
+<header class="bar">
+  <div class="bar-in">
+    <a class="id" href="#top"><span class="sq"></span>{profile.nombre.toUpperCase()}</a>
+    <nav aria-label="Secciones">
+      {links.map(l => <a href={l.href}>{l.label}</a>)}
+    </nav>
   </div>
 </header>
 
-<script>
-  // Scroll glass effect
-  const header = document.getElementById('site-header')!;
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 50);
-  }, { passive: true });
-
-  // Mobile menu
-  const btn = document.getElementById('hamburger')!;
-  const menu = document.getElementById('mobile-menu')!;
-
-  btn.addEventListener('click', () => {
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
-    menu.setAttribute('aria-hidden', String(open));
-    menu.classList.toggle('open', !open);
-    btn.classList.toggle('active', !open);
-  });
-
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    btn.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    menu.classList.remove('open');
-    btn.classList.remove('active');
-  }));
-</script>
-
 <style>
-.site-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 0 1.5rem;
-  transition: background-color 250ms ease, border-color 250ms ease;
-}
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: color-mix(in srgb, var(--ground) 90%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar-in {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 10px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .06em;
+  }
+  .id { text-decoration: none; color: var(--ink); }
+  .sq {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    margin-right: 8px;
+    vertical-align: 1px;
+  }
+  nav { display: flex; gap: 18px; }
+  nav a { color: var(--ink-3); text-decoration: none; transition: color .15s; }
+  nav a:hover { color: var(--accent); }
 
-.site-header.scrolled {
-  background: rgba(10,10,10,0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.header-nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  height: 68px;
-}
-
-.header-logo {
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  flex-shrink: 0;
-  transition: color 200ms ease;
-}
-
-.header-logo:hover { color: var(--color-accent-primary); }
-
-.header-links {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 1.75rem;
-  flex: 1;
-  justify-content: center;
-}
-
-.header-link {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color 200ms ease;
-}
-
-.header-link:hover { color: var(--color-text-primary); }
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-shrink: 0;
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  margin-left: auto;
-}
-
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--color-text-primary);
-  transition: transform 200ms ease, opacity 200ms ease;
-}
-
-.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-.mobile-menu {
-  display: none;
-  border-top: 1px solid var(--color-border-subtle);
-  padding: 1.5rem;
-  background: var(--color-bg-secondary);
-}
-
-.mobile-menu.open { display: block; }
-
-.mobile-links {
-  list-style: none;
-  margin: 0 0 1.25rem;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.mobile-link {
-  font-size: 1rem;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color 200ms ease;
-}
-
-.mobile-link:hover { color: var(--color-text-primary); }
-
-.mobile-bottom {
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border-subtle);
-}
-
-@media (max-width: 768px) {
-  .header-links, .header-actions { display: none; }
-  .hamburger { display: flex; }
-}
+  @media (max-width: 620px) {
+    nav { display: none; }
+    .bar-in { padding: 9px 17px; }
+  }
 </style>
